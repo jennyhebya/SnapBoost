@@ -15,8 +15,8 @@
             --primary: #8b5cf6; /* Violet */
             --secondary: #ec4899; /* Pink */
             --accent: #FFD700; /* Gold */
-            --dark-overlay: rgba(9, 9, 11, 0.85); /* Gelap transparan di atas gambar */
-            --card-bg: rgba(24, 24, 27, 0.7); /* Transparan */
+            --dark-overlay: rgba(9, 9, 11, 0.88); /* Overlay Hitam Lebih Gelap */
+            --card-bg: rgba(24, 24, 27, 0.75); /* Glassmorphism Card */
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
         }
@@ -24,28 +24,35 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         
         body {
-            /* BACKGROUND IMAGE SESUAI REQUEST */
-            background-image: url('https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            
             color: var(--text-main);
             overflow-x: hidden;
             padding-bottom: 90px;
-            
-            /* Overlay hitam agar background terlihat elegan dan teks terbaca */
             position: relative;
         }
 
-        /* Efek Overlay di atas background */
-        body::before {
-            content: "";
+        /* --- 1. BACKGROUND DYNAMIC (SLIDESHOW) --- */
+        #dynamic-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -3; /* Paling bawah */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* Gambar Utama Default (CSS Fallback) */
+            background-image: url('https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small');
+            
+            /* Animasi Transisi */
+            transition: opacity 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        /* Overlay Hitam agar teks terbaca */
+        .bg-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--dark-overlay);
-            z-index: -1;
+            z-index: -2;
+            backdrop-filter: blur(2px); /* Sedikit blur background */
         }
 
         /* Utility */
@@ -139,7 +146,7 @@
         /* Live Feed (Social Proof) */
         .live-feed {
             background: var(--card-bg);
-            backdrop-filter: blur(10px); /* Efek kaca */
+            backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 20px;
             margin: 40px 0;
@@ -185,7 +192,7 @@
             border: 2px solid var(--primary);
         }
 
-        /* Fallback Avatar if image fails to load */
+        /* Fallback Avatar */
         .user-avatar {
             width: 36px;
             height: 36px;
@@ -220,6 +227,11 @@
 </head>
 <body>
 
+    <!-- 1. DIV BACKGROUND ANIMASI -->
+    <div id="dynamic-bg"></div>
+    <!-- 2. OVERLAY HITAM TRANSPARAN -->
+    <div class="bg-overlay"></div>
+
     <!-- Top Banner -->
     <div class="top-banner">
         ⚠️ OFFER EXPIRES IN: <span id="countdown">05:00</span> (LIMITED SPOTS)
@@ -248,7 +260,7 @@
 
         <!-- Live Feed (FOMO) -->
         <section class="live-feed">
-            <diV class="feed-header">
+            <div class="feed-header">
                 <div class="live-dot"></div>
                 Recent Activity
             </div>
@@ -264,7 +276,7 @@
     </div>
 
     <footer>
-        &copy; 2018 - 2026 SnapBoost Inc. All rights reserved.
+        &copy; 2023 SnapBoost Inc. All rights reserved.
     </footer>
 
     <!-- Sticky Button Mobile -->
@@ -275,7 +287,37 @@
     </div>
 
     <script>
-        // --- 1. DATA FOTO DARI USER ---
+        // --- 1. KONFIGURASI BACKGROUND SLIDESHOW ---
+        // GANTI URL GAMBAR DI BAWAH INI DENGAN LINK ANDA
+        const bgList = [
+            "https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small", // Utama
+            "https://pbs.twimg.com/media/G-wJtcUbQAI83BY?format=jpg&name=small", // Ganti ini
+            "https://pbs.twimg.com/media/G2sm3LzboAAjzeE?format=jpg&name=small", // Ganti ini
+            "https://pbs.twimg.com/media/G12V4RybUAE1cNZ?format=jpg&name=small", // Ganti ini
+            "https://pbs.twimg.com/media/G12Vvufb0AUMnNj?format=jpg&name=small"  // Ganti ini
+        ];
+
+        const bgElement = document.getElementById('dynamic-bg');
+        let bgIndex = 0;
+        const bgIntervalTime = 5000; // Ganti setiap 5 detik
+        const transitionTime = 1500; // Waktu fade 1.5 detik (harus sama dengan CSS)
+
+        function changeBackground() {
+            bgElement.style.opacity = 0; // Fade out
+            setTimeout(() => {
+                bgIndex++;
+                if (bgIndex >= bgList.length) bgIndex = 0;
+                bgElement.style.backgroundImage = `url('${bgList[bgIndex]}')`;
+                bgElement.style.opacity = 1; // Fade in
+            }, transitionTime);
+        }
+
+        // Mulai slideshow setelah delay awal
+        setTimeout(changeBackground, bgIntervalTime);
+        setInterval(changeBackground, bgIntervalTime + transitionTime);
+
+
+        // --- 2. KONFIGURASI FEED ---
         const userImages = [
             "https://pbs.twimg.com/media/HGM_aQjbIAAO4sz?format=jpg&name=large",
             "https://pbs.twimg.com/media/HGM_aQzaYAAGp5D?format=jpg&name=large",
@@ -292,7 +334,7 @@
             "https://files.catbox.moe/52koye.heic" 
         ];
 
-        // --- 2. DATABASE NAMA (50 First Names + 50 Last Names) ---
+        // Database Nama (50 First + 50 Last)
         const firstNames = [
             "Liam", "Olivia", "Noah", "Emma", "Oliver", "Ava", "Elijah", "Charlotte", "William", "Sophia",
             "James", "Amelia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn", "Theodore", "Harper",
@@ -309,7 +351,7 @@
             "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts"
         ];
 
-        // --- 3. Countdown Timer ---
+        // --- 3. COUNTDOWN TIMER ---
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
             setInterval(function () {
@@ -322,7 +364,7 @@
             }, 1000);
         }
 
-        // --- 4. Live Feed Generator ---
+        // --- 4. FEED GENERATOR ---
         const feedList = document.getElementById('feedList');
         const actions = ["just joined Premium", "uploaded snap", "got boosted score", "secured access", "verified account", "upgraded tier"];
 
@@ -335,8 +377,6 @@
         function addFeedItem() {
             const username = generateUsername();
             const randomAction = actions[Math.floor(Math.random() * actions.length)];
-            
-            // Pilih foto random atau fallback
             const useImage = Math.random() > 0.3; 
             const randomImgUrl = userImages[Math.floor(Math.random() * userImages.length)];
             const initial = username.charAt(0);
@@ -349,41 +389,26 @@
                 img.src = randomImgUrl;
                 img.alt = "User Avatar";
                 img.className = 'feed-img';
-                
                 img.onerror = function() {
                     this.style.display = 'none';
                     this.parentNode.innerHTML = `<div class="user-avatar" style="background:#3b82f6; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
                 };
-
-                li.innerHTML = `
-                    ${img.outerHTML}
-                    <div><strong>${username}</strong> ${randomAction}</div>
-                `;
+                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${randomAction}</div>`;
             } else {
-                li.innerHTML = `
-                    <div class="user-avatar">${initial}</div>
-                    <div><strong>${username}</strong> ${randomAction}</div>
-                `;
+                li.innerHTML = `<div class="user-avatar">${initial}</div><div><strong>${username}</strong> ${randomAction}</div>`;
             }
 
             feedList.prepend(li);
-
-            // Keep only 5 items
             if (feedList.children.length > 5) {
                 feedList.removeChild(feedList.lastElementChild);
             }
         }
 
-        // Initialize
+        // Initialize All
         window.onload = function () {
-            // Start Timer
             let fiveMinutes = 60 * 5, display = document.querySelector('#countdown');
             startTimer(fiveMinutes, display);
-
-            // Add initial feeds
             addFeedItem();
-            
-            // Add new feed interval
             setInterval(addFeedItem, Math.random() * 2000 + 2000);
         };
     </script>
