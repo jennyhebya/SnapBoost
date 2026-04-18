@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapBoost Exclusive - Live Feed</title>
+    <meta name="description" content="Akses premium untuk meningkatkan jangkauan Snapchat Anda.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Violet */
+            --secondary: #ec4899; /* Pink */
+            --accent: #FFD700; /* Gold */
+            --dark-overlay: rgba(9, 9, 11, 0.85); /* Gelap transparan di atas gambar */
+            --card-bg: rgba(24, 24, 27, 0.7); /* Transparan */
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body {
+            /* BACKGROUND IMAGE SESUAI REQUEST */
+            background-image: url('https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            color: var(--text-main);
+            overflow-x: hidden;
+            padding-bottom: 90px;
+            
+            /* Overlay hitam agar background terlihat elegan dan teks terbaca */
+            position: relative;
+        }
+
+        /* Efek Overlay di atas background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--dark-overlay);
+            z-index: -1;
+        }
+
+        /* Utility */
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background: linear-gradient(90deg, #3b0764, #86198f);
+            text-align: center;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 5px; }
+        .verified-badge { background: var(--accent); color: #000; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 60px 20px 40px; }
+        .hero h1 {
+            font-size: 2.8rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Main CTA Button */
+        .cta-btn {
+            display: block;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px -10px rgba(236, 72, 153, 0.6);
+        }
+        .cta-btn:active { transform: scale(0.98); }
+        .cta-sub { font-size: 0.8rem; margin-top: 10px; color: var(--text-muted); display: block; }
+        
+        /* Shine Effect on Button */
+        .cta-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+
+        /* Live Feed (Social Proof) */
+        .live-feed {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px); /* Efek kaca */
+            border-radius: 16px;
+            padding: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .feed-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .live-dot {
+            width: 8px; height: 8px; background: #ef4444; border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+            animation: pulse-red 1.5s infinite;
+        }
+        @keyframes pulse-red { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        .feed-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        
+        .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            animation: slideIn 0.5s ease-out;
+            padding: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+
+        /* Image Styles for Feed */
+        .feed-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        /* Fallback Avatar if image fails to load */
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Footer */
+        footer { text-align: center; padding: 30px; font-size: 0.8rem; color: #888; position: relative; z-index: 1; }
+
+        /* Sticky Mobile CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 20px; left: 20px; right: 20px;
+            z-index: 100;
+            animation: fadeUp 0.5s ease-out 1s backwards;
+            display: none;
+        }
+        @media (max-width: 768px) { .sticky-cta { display: block; } .hero h1 { font-size: 2rem; } }
+        @keyframes fadeUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        ⚠️ OFFER EXPIRES IN: <span id="countdown">05:00</span> (LIMITED SPOTS)
+    </div>
+
+    <!-- Nav -->
+    <nav>
+        <div class="brand">
+            SNAP<span class="text-gradient">BOOST</span>
+            <span class="verified-badge">VERIFIED</span>
+        </div>
+        <div style="font-size: 0.9rem; color: var(--text-muted);">🇺🇸 US Server</div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Unlock Exclusive<br><span class="text-gradient">Private Access</span></h1>
+            <p>Join the elite room to boost your score instantly. Safe, fast, and verified by 20,000+ users.</p>
+            
+            <a href="https://fdeddg.hubss.one/p/b0r20" class="cta-btn" id="mainBtn">
+                GET ACCESS NOW
+            </a>
+            <span class="cta-sub">🔒 Secure Connection • No Password Required</span>
+        </section>
+
+        <!-- Live Feed (FOMO) -->
+        <section class="live-feed">
+            <diV class="feed-header">
+                <div class="live-dot"></div>
+                Recent Activity
+            </div>
+            <ul class="feed-list" id="feedList">
+                <!-- Items injected via JS -->
+            </ul>
+        </section>
+
+        <!-- Trust -->
+        <div style="text-align: center; margin: 40px 0; opacity: 0.7; font-size: 2rem;">
+            🔒 ⚡ 💎
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 SnapBoost Inc. All rights reserved.
+    </footer>
+
+    <!-- Sticky Button Mobile -->
+    <div class="sticky-cta">
+        <a href="https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1" class="cta-btn" style="padding: 15px; font-size: 1rem;">
+            CLAIM MY SPOT
+        </a>
+    </div>
+
+    <script>
+        // --- 1. DATA FOTO DARI USER ---
+        const userImages = [
+            "https://pbs.twimg.com/media/HGM_aQjbIAAO4sz?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_aQzaYAAGp5D?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_aRDbEAAlQBg?format=jpg&name=medium",
+            "https://pbs.twimg.com/media/HGM_aQvbAAAB6B0?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_1hCaAAACTpl?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_1hLbUAAYEQI?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_1hPaoAEa0hs?format=jpg&name=medium",
+            "https://pbs.twimg.com/media/HGM_1hDbgAA164b?format=jpg&name=4096x4096",
+            "https://pbs.twimg.com/media/HGNAB_VaMAA2nmx?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGNAB_LbkAEli42?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGNACEwbAAAnkEX?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGNACEuaEAAzlbb?format=jpg&name=large",
+            "https://files.catbox.moe/52koye.heic" 
+        ];
+
+        // --- 2. DATABASE NAMA (50 First Names + 50 Last Names) ---
+        const firstNames = [
+            "Liam", "Olivia", "Noah", "Emma", "Oliver", "Ava", "Elijah", "Charlotte", "William", "Sophia",
+            "James", "Amelia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn", "Theodore", "Harper",
+            "Leo", "Camila", "Jack", "Gianna", "Jayden", "Elizabeth", "Julian", "Luna", "Mateo", "Penelope",
+            "Alexander", "Scarlett", "Owen", "Aria", "Aiden", "Grace", "Sebastian", "Chloe", "Michael", "Layla",
+            "Samuel", "Milana", "Gabriel", "Ellie", "Lincoln", "Nora", "Riley", "Aurora", "Dylan", "Zoey"
+        ];
+
+        const lastNames = [
+            "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
+            "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin",
+            "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson",
+            "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores",
+            "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts"
+        ];
+
+        // --- 3. Countdown Timer ---
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) { timer = duration; }
+            }, 1000);
+        }
+
+        // --- 4. Live Feed Generator ---
+        const feedList = document.getElementById('feedList');
+        const actions = ["just joined Premium", "uploaded snap", "got boosted score", "secured access", "verified account", "upgraded tier"];
+
+        function generateUsername() {
+            const fName = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const lName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            return `${fName}_${lName}`;
+        }
+
+        function addFeedItem() {
+            const username = generateUsername();
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            
+            // Pilih foto random atau fallback
+            const useImage = Math.random() > 0.3; 
+            const randomImgUrl = userImages[Math.floor(Math.random() * userImages.length)];
+            const initial = username.charAt(0);
+
+            const li = document.createElement('li');
+            li.className = 'feed-item';
+
+            if (useImage) {
+                const img = document.createElement('img');
+                img.src = randomImgUrl;
+                img.alt = "User Avatar";
+                img.className = 'feed-img';
+                
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    this.parentNode.innerHTML = `<div class="user-avatar" style="background:#3b82f6; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
+                };
+
+                li.innerHTML = `
+                    ${img.outerHTML}
+                    <div><strong>${username}</strong> ${randomAction}</div>
+                `;
+            } else {
+                li.innerHTML = `
+                    <div class="user-avatar">${initial}</div>
+                    <div><strong>${username}</strong> ${randomAction}</div>
+                `;
+            }
+
+            feedList.prepend(li);
+
+            // Keep only 5 items
+            if (feedList.children.length > 5) {
+                feedList.removeChild(feedList.lastElementChild);
+            }
+        }
+
+        // Initialize
+        window.onload = function () {
+            // Start Timer
+            let fiveMinutes = 60 * 5, display = document.querySelector('#countdown');
+            startTimer(fiveMinutes, display);
+
+            // Add initial feeds
+            addFeedItem();
+            
+            // Add new feed interval
+            setInterval(addFeedItem, Math.random() * 2000 + 2000);
+        };
+    </script>
+</body>
+</html>
