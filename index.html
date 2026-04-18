@@ -15,6 +15,7 @@
             --primary: #8b5cf6; /* Violet */
             --secondary: #ec4899; /* Pink */
             --accent: #FFD700; /* Gold */
+            --blue-accent: #3b82f6; /* Blue */
             --dark-overlay: rgba(9, 9, 11, 0.88); /* Overlay Hitam Lebih Gelap */
             --card-bg: rgba(24, 24, 27, 0.75); /* Glassmorphism Card */
             --text-main: #ffffff;
@@ -34,25 +35,21 @@
         #dynamic-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -3; /* Paling bawah */
+            z-index: -3;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            /* Gambar Utama Default (CSS Fallback) */
             background-image: url('https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small');
-            
-            /* Animasi Transisi */
             transition: opacity 1.5s ease-in-out;
             opacity: 1;
         }
 
-        /* Overlay Hitam agar teks terbaca */
         .bg-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--dark-overlay);
             z-index: -2;
-            backdrop-filter: blur(2px); /* Sedikit blur background */
+            backdrop-filter: blur(2px);
         }
 
         /* Utility */
@@ -132,7 +129,6 @@
         .cta-btn:active { transform: scale(0.98); }
         .cta-sub { font-size: 0.8rem; margin-top: 10px; color: var(--text-muted); display: block; }
         
-        /* Shine Effect on Button */
         .cta-btn::after {
             content: '';
             position: absolute;
@@ -181,15 +177,83 @@
             padding: 8px;
             background: rgba(0,0,0,0.2);
             border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.02);
+            transition: all 0.3s;
         }
 
-        /* Image Styles for Feed */
+        /* --- 1. STYLE KHUSUS UNTUK USER VIP (GOLD) --- */
+        .feed-item.vip-feed {
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 215, 0, 0.05);
+        }
+        .feed-item.vip-feed strong {
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+        .feed-item.vip-feed .feed-img {
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        .feed-item.vip-feed .user-avatar {
+            background: #FFD700;
+            color: #000;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* --- 2. STYLE KHUSUS UNTUK USER UPGRADED TIER (BLUE) --- */
+        .feed-item.pro-feed {
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .feed-item.pro-feed strong {
+            color: #60a5fa; /* Light Blue */
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+        }
+        .feed-item.pro-feed .feed-img {
+            border-color: #60a5fa;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        .feed-item.pro-feed .user-avatar {
+            background: #3b82f6; /* Solid Blue */
+            color: #fff;
+            border-color: #60a5fa;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Badges */
+        .verified-badge-feed, .pro-badge-feed {
+            display: none;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .verified-badge-feed { /* VIP Badge */
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            color: #000;
+        }
+        
+        .pro-badge-feed { /* PRO Badge */
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #fff;
+        }
+
+        .feed-item.vip-feed .verified-badge-feed { display: inline-flex; }
+        .feed-item.pro-feed .pro-badge-feed { display: inline-flex; }
+
+        /* Default Image Styles */
         .feed-img {
             width: 36px;
             height: 36px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--primary);
+            background-color: #333;
         }
 
         /* Fallback Avatar */
@@ -288,31 +352,29 @@
 
     <script>
         // --- 1. KONFIGURASI BACKGROUND SLIDESHOW ---
-        // GANTI URL GAMBAR DI BAWAH INI DENGAN LINK ANDA
         const bgList = [
-            "https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small", // Utama
-            "https://pbs.twimg.com/media/G-wJtcUbQAI83BY?format=jpg&name=small", // Ganti ini
-            "https://pbs.twimg.com/media/G2sm3LzboAAjzeE?format=jpg&name=small", // Ganti ini
-            "https://pbs.twimg.com/media/G12V4RybUAE1cNZ?format=jpg&name=small", // Ganti ini
-            "https://pbs.twimg.com/media/G12Vvufb0AUMnNj?format=jpg&name=small"  // Ganti ini
+            "https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small",
+            "https://pbs.twimg.com/media/G-wJtcUbQAI83BY?format=jpg&name=small",
+            "https://pbs.twimg.com/media/G2sm3LzboAAjzeE?format=jpg&name=small",
+            "https://pbs.twimg.com/media/G12V4RybUAE1cNZ?format=jpg&name=small",
+            "https://pbs.twimg.com/media/G12Vvufb0AUMnNj?format=jpg&name=small"
         ];
 
         const bgElement = document.getElementById('dynamic-bg');
         let bgIndex = 0;
-        const bgIntervalTime = 5000; // Ganti setiap 5 detik
-        const transitionTime = 1500; // Waktu fade 1.5 detik (harus sama dengan CSS)
+        const bgIntervalTime = 5000; 
+        const transitionTime = 1500; 
 
         function changeBackground() {
-            bgElement.style.opacity = 0; // Fade out
+            bgElement.style.opacity = 0; 
             setTimeout(() => {
                 bgIndex++;
                 if (bgIndex >= bgList.length) bgIndex = 0;
                 bgElement.style.backgroundImage = `url('${bgList[bgIndex]}')`;
-                bgElement.style.opacity = 1; // Fade in
+                bgElement.style.opacity = 1; 
             }, transitionTime);
         }
 
-        // Mulai slideshow setelah delay awal
         setTimeout(changeBackground, bgIntervalTime);
         setInterval(changeBackground, bgIntervalTime + transitionTime);
 
@@ -374,7 +436,6 @@
             "https://files.catbox.moe/w1aqo1.jpg" 
         ];
 
-        // Database Nama (50 First + 50 Last)
         const firstNames = [
             "Liam", "Olivia", "Noah", "Emma", "Oliver", "Ava", "Elijah", "Charlotte", "William", "Sophia",
             "James", "Amelia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn", "Theodore", "Harper",
@@ -404,7 +465,7 @@
             }, 1000);
         }
 
-        // --- 4. FEED GENERATOR ---
+        // --- 4. FEED GENERATOR (UPDATED LOGIC) ---
         const feedList = document.getElementById('feedList');
         const actions = ["Just joined Premium", "Uploaded snap", "Got boosted score", "Secured access", "Free access", "Verified account", "Upgraded tier"];
 
@@ -424,6 +485,19 @@
             const li = document.createElement('li');
             li.className = 'feed-item';
 
+            // Tentukan Tipe User
+            let userStatus = 'normal'; // normal, vip, pro
+            
+            if (randomAction === "Verified account") {
+                userStatus = 'vip';
+            } else if (randomAction === "Upgraded tier") {
+                userStatus = 'pro';
+            }
+
+            // Tambah Class CSS sesuai status
+            if (userStatus === 'vip') li.classList.add('vip-feed');
+            if (userStatus === 'pro') li.classList.add('pro-feed');
+
             if (useImage) {
                 const img = document.createElement('img');
                 img.src = randomImgUrl;
@@ -431,11 +505,32 @@
                 img.className = 'feed-img';
                 img.onerror = function() {
                     this.style.display = 'none';
-                    this.parentNode.innerHTML = `<div class="user-avatar" style="background:#3b82f6; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
+                    // Logic Fallback Warna Avatar jika gambar error
+                    let bg = '#333';
+                    if (userStatus === 'vip') bg = '#FFD700';
+                    if (userStatus === 'pro') bg = '#3b82f6';
+                    
+                    this.parentNode.innerHTML = `<div class="user-avatar" style="background:${bg}; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
                 };
-                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${randomAction}</div>`;
+                
+                // Badge
+                let badge = '';
+                if (userStatus === 'vip') badge = '<span class="verified-badge-feed">VIP</span>';
+                if (userStatus === 'pro') badge = '<span class="pro-badge-feed">PRO</span>';
+                
+                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${badge} ${randomAction}</div>`;
             } else {
-                li.innerHTML = `<div class="user-avatar">${initial}</div><div><strong>${username}</strong> ${randomAction}</div>`;
+                // Logic Warna Avatar jika tidak pakai foto
+                let bg = '#333';
+                let border = 'transparent';
+                if (userStatus === 'vip') { bg = '#FFD700'; border = '#FFD700'; }
+                if (userStatus === 'pro') { bg = '#3b82f6'; border = '#3b82f6'; }
+
+                let badge = '';
+                if (userStatus === 'vip') badge = '<span class="verified-badge-feed">VIP</span>';
+                if (userStatus === 'pro') badge = '<span class="pro-badge-feed">PRO</span>';
+
+                li.innerHTML = `<div class="user-avatar" style="background:${bg}; border-color:${border};">${initial}</div><div><strong>${username}</strong> ${badge} ${randomAction}</div>`;
             }
 
             feedList.prepend(li);
