@@ -16,8 +16,8 @@
             --gold: #FFD700;
             --blue-accent: #3b82f6;
             --red-glow: #ef4444;
-            --dark-overlay: rgba(9, 9, 11, 0.65); /* DIUBAH DARI 0.88 KE 0.65 AGAR GAMBAR LEBIH TERANG */
-            --card-bg: rgba(24, 24, 27, 0.75);
+            --dark-overlay: rgba(9, 9, 11, 0.65); /* Background transparan */
+            --card-bg: rgba(20, 20, 25, 0.85); /* Card background lebih solid dan gelap */
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
         }
@@ -28,13 +28,13 @@
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
-            /* IMPORTANT: Reset body height untuk Mobile */
             height: 100vh;
             display: flex;
             flex-direction: column;
+            background-color: #050505;
         }
 
-        /* --- 1. BACKGROUND DYNAMIC (SLIDESHOW) --- */
+        /* --- BACKGROUND (GRID + SLIDESHOW) --- */
         #dynamic-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -47,20 +47,36 @@
             opacity: 1;
         }
 
-        .bg-overlay {
+        /* Grid Overlay untuk kesan futuristik halus */
+        .grid-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--dark-overlay);
             z-index: -2;
-            /* BACKDROP-FILTER DIHAPUS AGAR TIDAK BURAM/BLUR */
+            background: 
+                linear-gradient(rgba(9, 9, 11, 0.65), rgba(9, 9, 11, 0.65)), /* Overlay utama */
+                linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px), /* Garis vertikal */
+                linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px); /* Garis horizontal */
+            background-size: 100% 100%, 40px 40px, 40px 40px;
         }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animation Delays untuk efek masuk berurutan */
+        .anim-1 { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; } /* Banner */
+        .anim-2 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; } /* Nav */
+        .anim-3 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; } /* Hero */
+        .anim-4 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; } /* Feed */
 
         /* Utility */
         .container { 
             flex: 1; 
             display: flex; 
             flex-direction: column; 
-            justify-content: space-between; /* Agar isi merata dari atas ke bawah */
+            justify-content: space-between;
             padding: 0 15px; 
             position: relative; 
             z-index: 1;
@@ -74,47 +90,44 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- MOBILE SPECIFIC STYLES (NO SCROLL) --- */
+        /* --- MOBILE STYLES --- */
         
-        /* Top Banner - Tipis */
+        /* Top Banner */
         .top-banner {
             background: linear-gradient(90deg, #3b0764, #86198f);
             text-align: center;
-            padding: 4px 0; /* Dikurangi jadi 4px */
-            font-size: 0.75rem; /* Font lebih kecil */
+            padding: 4px 0;
+            font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 0.5px;
             position: relative;
             z-index: 10;
         }
 
-        /* Navbar - Kecil */
+        /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0; /* Dikurangi */
+            padding: 8px 0;
             background: rgba(0,0,0,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .brand { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 5px; }
         .verified-badge { background: var(--gold); color: #000; font-size: 0.5rem; padding: 2px 4px; border-radius: 4px; font-weight: 800; }
 
-        /* Hero Section - Compact */
-        .hero { 
-            text-align: center; 
-            padding: 15px 0 10px; /* Dikurangi padding */
-        }
+        /* Hero Section */
+        .hero { text-align: center; padding: 15px 0 10px; }
         .hero h1 {
-            font-size: 1.8rem; /* Font judul lebih kecil */
+            font-size: 1.8rem;
             line-height: 1.1;
             margin-bottom: 8px;
             font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8); /* Tambah shadow tebal agar teks tetap terbaca di background cerah */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
         .hero p {
             color: var(--text-muted);
-            font-size: 0.85rem; /* Font deskripsi kecil */
+            font-size: 0.85rem;
             margin-bottom: 10px;
             line-height: 1.4;
             max-width: 300px;
@@ -122,13 +135,13 @@
             margin-right: auto;
         }
 
-        /* Button - Compact */
+        /* Button with Hover Effect */
         .cta-btn {
             display: block;
             width: 100%;
-            max-width: 280px; /* Lebar button dibatasi */
+            max-width: 280px;
             margin: 0 auto;
-            padding: 12px; /* Dikurangi */
+            padding: 12px;
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             font-size: 0.9rem;
@@ -141,37 +154,69 @@
             position: relative;
             overflow: hidden;
             text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .cta-btn:active { transform: scale(0.98); }
-        .cta-sub { display: none; /* Hilangkan subteks di HP agar hemat tempat */ }
+        
+        /* Efek Hover Button */
+        .cta-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 30px -5px rgba(236, 72, 153, 0.7);
+        }
 
-        /* Live Feed - Compact */
-        .live-feed {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px); /* Blur ini hanya di dalam kotak feed, bukan background utama */
-            border-radius: 12px;
-            padding: 10px;
+        .cta-btn:active { transform: scale(0.98); }
+        .cta-sub { display: none; }
+
+        /* --- FEED CARD (LEBIH RAPI & FUTURISTIC) --- */
+        .feed-section {
             margin-bottom: 10px;
+        }
+
+        .feed-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            max-height: 180px; /* Batasi tinggi agar tidak scroll */
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-height: 180px;
             overflow: hidden;
         }
+        
         .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .feed-title {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
             font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
-        .live-dot {
+
+        .status-dot {
             width: 6px; height: 6px; background: #ef4444; border-radius: 50%;
             box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
             animation: pulse-red 1.5s infinite;
         }
+
+        .live-count {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
         @keyframes pulse-red { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
         .feed-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
@@ -180,22 +225,47 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.8rem; /* Font kecil */
+            font-size: 0.8rem;
             animation: slideIn 0.5s ease-out;
-            padding: 6px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.02);
+            padding: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        /* --- STYLE CONTENT FEED (AGAR RAPI) --- */
+        .feed-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .feed-content strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+        .feed-content span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Efek Hover Feed */
+        .feed-item:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
         }
 
         /* --- STYLES WARNA (VIP, PRO, SECURE) --- */
-        .feed-item.vip-feed { border: 1px solid rgba(255, 215, 0, 0.4); background: rgba(255, 215, 0, 0.08); }
+        .feed-item.vip-feed { border: 1px solid rgba(255, 215, 0, 0.3); background: rgba(255, 215, 0, 0.05); }
         .feed-item.vip-feed strong { color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.4); }
         
-        .feed-item.pro-feed { border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+        .feed-item.pro-feed { border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05); }
         .feed-item.pro-feed strong { color: #60a5fa; text-shadow: 0 0 6px rgba(59, 130, 246, 0.4); }
 
-        .feed-item.secure-feed { border: 1px solid rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.08); }
+        .feed-item.secure-feed { border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
         .feed-item.secure-feed strong { color: #f87171; text-shadow: 0 0 6px rgba(239, 68, 68, 0.4); }
 
         /* Avatar Styles */
@@ -227,59 +297,43 @@
 
         .feed-item.vip-feed .verified-badge-feed, .feed-item.pro-feed .pro-badge-feed, .feed-item.secure-feed .secure-badge-feed { display: inline-flex; }
 
-        /* Footer - Kecil */
+        /* Footer */
         footer { text-align: center; padding: 10px 0; font-size: 0.65rem; color: #888; position: relative; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
         .trust-icons { font-size: 1rem; margin-bottom: 5px; opacity: 0.6; }
 
-        /* Animation */
+        /* Animation SlideIn */
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- DESKTOP OVERRIDE (WEB) --- */
+        /* --- DESKTOP OVERRIDES --- */
         @media (min-width: 769px) {
-            body {
-                height: auto; /* Reset scrollable body for desktop */
-                padding-bottom: 90px; /* Add space for footer */
-            }
+            body { height: auto; padding-bottom: 90px; }
+            .container { padding: 0 20px; display: block; }
 
-            .container {
-                padding: 0 20px;
-                display: block; /* Block layout for desktop */
-            }
-
-            /* Banner */
             .top-banner { padding: 8px; font-size: 0.85rem; }
-            
-            /* Navbar */
-            nav { padding: 15px 20px; background: rgba(0,0,0,0.2); }
+            nav { padding: 15px 20px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.1); }
             .brand { font-size: 1.2rem; }
             .verified-badge { font-size: 0.6rem; padding: 2px 6px; }
 
-            /* Hero */
             .hero { padding: 60px 20px 40px; }
             .hero h1 { font-size: 2.8rem; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
             .hero p { font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
 
-            /* Button */
             .cta-btn { max-width: 350px; padding: 18px; font-size: 1.1rem; }
             .cta-sub { display: block; margin-top: 10px; color: var(--text-muted); font-size: 0.8rem; }
 
-            /* Feed */
-            .live-feed { padding: 20px; margin: 40px 0; border-radius: 16px; max-height: none; overflow: visible; }
+            .feed-card { padding: 20px; margin: 40px 0; border-radius: 20px; max-height: none; overflow: visible; border: 1px solid rgba(255,255,255,0.15); }
             .feed-header { font-size: 0.9rem; margin-bottom: 15px; }
             .feed-list { gap: 12px; }
-            .feed-item { font-size: 0.9rem; padding: 8px; border-radius: 8px; gap: 12px; }
+            .feed-item { font-size: 0.9rem; padding: 10px; border-radius: 12px; gap: 12px; }
 
-            /* Avatar Desktop */
             .feed-img { width: 36px; height: 36px; }
             .user-avatar { width: 36px; height: 36px; font-size: 0.8rem; }
             .verified-badge-feed, .pro-badge-feed, .secure-badge-feed { font-size: 0.6rem; padding: 2px 5px; margin-left: 4px; }
 
-            /* Footer Desktop */
             footer { padding: 30px 0; font-size: 0.8rem; text-shadow: none; }
             .trust-icons { font-size: 2rem; margin-top: 20px; opacity: 0.7; display: flex; justify-content: center; gap: 15px; }
             
-            /* Sticky CTA Desktop */
-            .sticky-cta { display: none; } /* Hide sticky on desktop */
+            .sticky-cta { display: none; }
         }
 
         .sticky-cta { display: none; }
@@ -290,26 +344,26 @@
 
     <!-- 1. DIV BACKGROUND ANIMASI -->
     <div id="dynamic-bg"></div>
-    <!-- 2. OVERLAY HITAM TRANSPARAN (BLUR DIHAPUS, KEHITAMAN DIKURANGI) -->
-    <div class="bg-overlay"></div>
+    <!-- 2. GRID OVERLAY -->
+    <div class="grid-overlay"></div>
 
     <!-- Top Banner -->
-    <div class="top-banner">
+    <div class="top-banner anim-1">
         ⚠️ OFFER EXPIRES IN: <span id="countdown">05:00</span> (LIMITED SPOTS)
     </div>
 
     <!-- Nav -->
-    <nav>
+    <nav class="anim-2">
         <div class="brand">
             SNAP<span class="text-gradient">BOOST</span>
             <span class="verified-badge">VERIFIED</span>
         </div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);">🇺🇸 US Server</div>
+        <div style="font-size: 0.9rem; color: var(--text-muted);">🇺🇸 US Server</div>
     </nav>
 
     <div class="container">
         <!-- Hero -->
-        <section class="hero">
+        <section class="hero anim-3">
             <h1>Unlock Exclusive<br><span class="text-gradient">Private Access</span></h1>
             <p>Join the elite room to boost your score instantly. Safe, fast, and verified.</p>
             
@@ -321,14 +375,20 @@
         </section>
 
         <!-- Live Feed (FOMO) -->
-        <section class="live-feed">
-            <div class="feed-header">
-                <div class="live-dot"></div>
-                Recent Activity
+        <section class="feed-section anim-4">
+            <div class="feed-card">
+                <div class="feed-header">
+                    <div class="feed-title">
+                        <div class="status-dot"></div>
+                        Live Activity
+                    </div>
+                    <!-- ID untuk update angka online -->
+                    <div class="live-count" id="onlineCount">Online: 2,450</div>
+                </div>
+                <ul class="feed-list" id="feedList">
+                    <!-- Items injected via JS -->
+                </ul>
             </div>
-            <ul class="feed-list" id="feedList">
-                <!-- Items injected via JS -->
-            </ul>
         </section>
 
         <!-- Trust & Footer -->
@@ -343,19 +403,13 @@
     <script>
         // --- KONFIGURASI REDIRECT OTOMATIS ---
         const targetUrl = "https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1";
-        const redirectTime = 30; // Waktu dalam detik (30 detik)
+        const redirectTime = 30;
         
-        // Fungsi Redirect
         function doRedirect() {
-            if(targetUrl) {
-                window.location.href = targetUrl;
-            }
+            if(targetUrl) window.location.href = targetUrl;
         }
 
-        // Set Timer Redirect Otomatis
         let redirectTimeout = setTimeout(doRedirect, redirectTime * 1000);
-
-        // Tangani jika User klik tombol manual
         document.getElementById('mainBtn').addEventListener('click', function() {
             clearTimeout(redirectTimeout);
         });
@@ -444,7 +498,26 @@
             }, 1000);
         }
 
-        // --- 5. FEED GENERATOR (SMART LOGIC) ---
+        // --- 5. FUNGSI UPDATE JUMLAH ONLINE (AUTO INCREMENT) ---
+        function updateOnlineCount() {
+            const countElement = document.getElementById('onlineCount');
+            // Ambil angka saat ini, hapus non-digit (koma, titik)
+            let currentText = countElement.innerText;
+            let currentNumber = parseInt(currentText.replace(/\D/g, ''));
+
+            // Tambah random antara 1 sampai 3
+            let increment = Math.floor(Math.random() * 3) + 1;
+            let newNumber = currentNumber + increment;
+
+            // Format ulang dengan koma
+            countElement.innerText = "Online: " + newNumber.toLocaleString();
+        }
+
+        // Jalankan setiap 2 detik
+        setInterval(updateOnlineCount, 2000);
+
+
+        // --- 6. FEED GENERATOR (SMART LOGIC) ---
         const feedList = document.getElementById('feedList');
         const actions = [
             "Just joined Premium", "Uploaded snap", "Got boosted score", "Secured access", "Free access", "Verified account", "Upgraded tier"
@@ -493,28 +566,31 @@
             if (userStatus === 'pro') li.classList.add('pro-feed');
             if (userStatus === 'secure') li.classList.add('secure-feed');
 
+            let avatarHTML = '';
             if (useImage) {
-                const img = document.createElement('img');
-                img.src = randomImgUrl;
-                img.alt = "User Avatar";
-                img.className = 'feed-img';
+                avatarHTML = `<img src="${randomImgUrl}" class="feed-img" alt="User Avatar">`;
+            } else {
+                avatarHTML = `<div class="user-avatar">${initial}</div>`;
+            }
+
+            li.innerHTML = `
+                ${avatarHTML}
+                <div class="feed-content">
+                    <strong>${username} ${badge}</strong>
+                    <span>${icon} ${randomAction}</span>
+                </div>
+            `;
+
+            if (useImage) {
+                const img = li.querySelector('img');
                 img.onerror = function() {
                     this.style.display = 'none';
                     let bg = '#333';
                     if (userStatus === 'vip') bg = '#FFD700';
                     else if (userStatus === 'pro') bg = '#3b82f6';
                     else if (userStatus === 'secure') bg = '#ef4444';
-                    this.parentNode.innerHTML = `<div class="user-avatar" style="background:${bg}; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
+                    this.parentNode.innerHTML = `<div class="user-avatar" style="background:${bg}; display:flex; align-items:center; justify-content:center;">${initial}</div>` + `<div class="feed-content"><strong>${username} ${badge}</strong><span>${icon} ${randomAction}</span></div>`;
                 };
-                
-                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${badge} ${icon} ${randomAction}</div>`;
-            } else {
-                let bg = '#333';
-                if (userStatus === 'vip') bg = '#FFD700';
-                else if (userStatus === 'pro') bg = '#3b82f6';
-                else if (userStatus === 'secure') bg = '#ef4444';
-
-                li.innerHTML = `<div class="user-avatar" style="background:${bg};">${initial}</div><div><strong>${username}</strong> ${badge} ${icon} ${randomAction}</div>`;
             }
 
             feedList.prepend(li);
