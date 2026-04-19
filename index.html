@@ -2,9 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SnapBoost Exclusive - Live Feed</title>
-    <meta name="description" content="Premium access to increase your Snapchat reach.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SnapBoost Exclusive</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,12 +11,13 @@
 
     <style>
         :root {
-            --primary: #8b5cf6; /* Violet */
-            --secondary: #ec4899; /* Pink */
-            --accent: #FFD700; /* Gold */
-            --blue-accent: #3b82f6; /* Blue */
-            --dark-overlay: rgba(9, 9, 11, 0.88); /* Overlay Hitam Lebih Gelap */
-            --card-bg: rgba(24, 24, 27, 0.75); /* Glassmorphism Card */
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --gold: #FFD700;
+            --blue-accent: #3b82f6;
+            --red-glow: #ef4444;
+            --dark-overlay: rgba(9, 9, 11, 0.65); /* DIUBAH DARI 0.88 KE 0.65 AGAR GAMBAR LEBIH TERANG */
+            --card-bg: rgba(24, 24, 27, 0.75);
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
         }
@@ -27,8 +27,11 @@
         body {
             color: var(--text-main);
             overflow-x: hidden;
-            padding-bottom: 90px;
             position: relative;
+            /* IMPORTANT: Reset body height untuk Mobile */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* --- 1. BACKGROUND DYNAMIC (SLIDESHOW) --- */
@@ -49,243 +52,237 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--dark-overlay);
             z-index: -2;
-            backdrop-filter: blur(2px);
+            /* BACKDROP-FILTER DIHAPUS AGAR TIDAK BURAM/BLUR */
         }
 
         /* Utility */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        .container { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; /* Agar isi merata dari atas ke bawah */
+            padding: 0 15px; 
+            position: relative; 
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
         .text-gradient {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Top Banner */
+        /* --- MOBILE SPECIFIC STYLES (NO SCROLL) --- */
+        
+        /* Top Banner - Tipis */
         .top-banner {
             background: linear-gradient(90deg, #3b0764, #86198f);
             text-align: center;
-            padding: 8px;
-            font-size: 0.85rem;
+            padding: 4px 0; /* Dikurangi jadi 4px */
+            font-size: 0.75rem; /* Font lebih kecil */
             font-weight: 600;
             letter-spacing: 0.5px;
             position: relative;
             z-index: 10;
         }
 
-        /* Navbar */
+        /* Navbar - Kecil */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 8px 0; /* Dikurangi */
             background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 5px; }
-        .verified-badge { background: var(--accent); color: #000; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+        .brand { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 5px; }
+        .verified-badge { background: var(--gold); color: #000; font-size: 0.5rem; padding: 2px 4px; border-radius: 4px; font-weight: 800; }
 
-        /* Hero Section */
-        .hero { text-align: center; padding: 60px 20px 40px; }
+        /* Hero Section - Compact */
+        .hero { 
+            text-align: center; 
+            padding: 15px 0 10px; /* Dikurangi padding */
+        }
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 1.8rem; /* Font judul lebih kecil */
             line-height: 1.1;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8); /* Tambah shadow tebal agar teks tetap terbaca di background cerah */
         }
         .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            font-size: 0.85rem; /* Font deskripsi kecil */
+            margin-bottom: 10px;
+            line-height: 1.4;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Main CTA Button */
+        /* Button - Compact */
         .cta-btn {
             display: block;
             width: 100%;
-            max-width: 350px;
+            max-width: 280px; /* Lebar button dibatasi */
             margin: 0 auto;
-            padding: 18px;
+            padding: 12px; /* Dikurangi */
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: 700;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 20px -5px rgba(236, 72, 153, 0.5);
             position: relative;
             overflow: hidden;
             text-decoration: none;
         }
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px -10px rgba(236, 72, 153, 0.6);
-        }
         .cta-btn:active { transform: scale(0.98); }
-        .cta-sub { font-size: 0.8rem; margin-top: 10px; color: var(--text-muted); display: block; }
-        
-        .cta-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shine 3s infinite;
-        }
-        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        .cta-sub { display: none; /* Hilangkan subteks di HP agar hemat tempat */ }
 
-        /* Live Feed (Social Proof) */
+        /* Live Feed - Compact */
         .live-feed {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 40px 0;
+            backdrop-filter: blur(10px); /* Blur ini hanya di dalam kotak feed, bukan background utama */
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 10px;
             border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-height: 180px; /* Batasi tinggi agar tidak scroll */
+            overflow: hidden;
         }
         .feed-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .live-dot {
-            width: 8px; height: 8px; background: #ef4444; border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+            width: 6px; height: 6px; background: #ef4444; border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
             animation: pulse-red 1.5s infinite;
         }
         @keyframes pulse-red { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        .feed-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .feed-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
         
         .feed-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.9rem;
+            gap: 10px;
+            font-size: 0.8rem; /* Font kecil */
             animation: slideIn 0.5s ease-out;
-            padding: 8px;
+            padding: 6px;
             background: rgba(0,0,0,0.2);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.02);
-            transition: all 0.3s;
         }
 
-        /* --- 1. STYLE KHUSUS UNTUK USER VIP (GOLD) --- */
-        .feed-item.vip-feed {
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            background: rgba(255, 215, 0, 0.05);
-        }
-        .feed-item.vip-feed strong {
-            color: #FFD700;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-        }
-        .feed-item.vip-feed .feed-img {
-            border-color: #FFD700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-        .feed-item.vip-feed .user-avatar {
-            background: #FFD700;
-            color: #000;
-            border-color: #FFD700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
+        /* --- STYLES WARNA (VIP, PRO, SECURE) --- */
+        .feed-item.vip-feed { border: 1px solid rgba(255, 215, 0, 0.4); background: rgba(255, 215, 0, 0.08); }
+        .feed-item.vip-feed strong { color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.4); }
+        
+        .feed-item.pro-feed { border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
+        .feed-item.pro-feed strong { color: #60a5fa; text-shadow: 0 0 6px rgba(59, 130, 246, 0.4); }
 
-        /* --- 2. STYLE KHUSUS UNTUK USER UPGRADED TIER (BLUE) --- */
-        .feed-item.pro-feed {
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            background: rgba(59, 130, 246, 0.05);
-        }
-        .feed-item.pro-feed strong {
-            color: #60a5fa; /* Light Blue */
-            text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-        }
-        .feed-item.pro-feed .feed-img {
-            border-color: #60a5fa;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-        }
-        .feed-item.pro-feed .user-avatar {
-            background: #3b82f6; /* Solid Blue */
-            color: #fff;
-            border-color: #60a5fa;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-        }
+        .feed-item.secure-feed { border: 1px solid rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.08); }
+        .feed-item.secure-feed strong { color: #f87171; text-shadow: 0 0 6px rgba(239, 68, 68, 0.4); }
+
+        /* Avatar Styles */
+        .feed-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); background-color: #333; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: white; border: 2px solid transparent; }
+        
+        .feed-item.vip-feed .feed-img, .feed-item.vip-feed .user-avatar { border-color: #FFD700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
+        .feed-item.vip-feed .user-avatar { background: #FFD700; color: #000; }
+        
+        .feed-item.pro-feed .feed-img, .feed-item.pro-feed .user-avatar { border-color: #3b82f6; box-shadow: 0 0 8px rgba(59, 130, 246, 0.3); }
+        .feed-item.pro-feed .user-avatar { background: #3b82f6; color: #fff; }
+
+        .feed-item.secure-feed .feed-img, .feed-item.secure-feed .user-avatar { border-color: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.3); }
+        .feed-item.secure-feed .user-avatar { background: #ef4444; color: #fff; }
 
         /* Badges */
-        .verified-badge-feed, .pro-badge-feed {
+        .verified-badge-feed, .pro-badge-feed, .secure-badge-feed {
             display: none;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             font-weight: 800;
-            padding: 2px 5px;
-            border-radius: 4px;
-            margin-left: 4px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 3px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        
-        .verified-badge-feed { /* VIP Badge */
-            background: linear-gradient(135deg, #FFD700, #B8860B);
-            color: #000;
-        }
-        
-        .pro-badge-feed { /* PRO Badge */
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: #fff;
-        }
+        .verified-badge-feed { background: linear-gradient(135deg, #FFD700, #B8860B); color: #000; }
+        .pro-badge-feed { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+        .secure-badge-feed { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
 
-        .feed-item.vip-feed .verified-badge-feed { display: inline-flex; }
-        .feed-item.pro-feed .pro-badge-feed { display: inline-flex; }
+        .feed-item.vip-feed .verified-badge-feed, .feed-item.pro-feed .pro-badge-feed, .feed-item.secure-feed .secure-badge-feed { display: inline-flex; }
 
-        /* Default Image Styles */
-        .feed-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            background-color: #333;
-        }
+        /* Footer - Kecil */
+        footer { text-align: center; padding: 10px 0; font-size: 0.65rem; color: #888; position: relative; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .trust-icons { font-size: 1rem; margin-bottom: 5px; opacity: 0.6; }
 
-        /* Fallback Avatar */
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
-            border: 2px solid transparent;
-        }
-
+        /* Animation */
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Footer */
-        footer { text-align: center; padding: 30px; font-size: 0.8rem; color: #888; position: relative; z-index: 1; }
+        /* --- DESKTOP OVERRIDE (WEB) --- */
+        @media (min-width: 769px) {
+            body {
+                height: auto; /* Reset scrollable body for desktop */
+                padding-bottom: 90px; /* Add space for footer */
+            }
 
-        /* Sticky Mobile CTA */
-        .sticky-cta {
-            position: fixed;
-            bottom: 20px; left: 20px; right: 20px;
-            z-index: 100;
-            animation: fadeUp 0.5s ease-out 1s backwards;
-            display: none;
+            .container {
+                padding: 0 20px;
+                display: block; /* Block layout for desktop */
+            }
+
+            /* Banner */
+            .top-banner { padding: 8px; font-size: 0.85rem; }
+            
+            /* Navbar */
+            nav { padding: 15px 20px; background: rgba(0,0,0,0.2); }
+            .brand { font-size: 1.2rem; }
+            .verified-badge { font-size: 0.6rem; padding: 2px 6px; }
+
+            /* Hero */
+            .hero { padding: 60px 20px 40px; }
+            .hero h1 { font-size: 2.8rem; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+            .hero p { font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+            /* Button */
+            .cta-btn { max-width: 350px; padding: 18px; font-size: 1.1rem; }
+            .cta-sub { display: block; margin-top: 10px; color: var(--text-muted); font-size: 0.8rem; }
+
+            /* Feed */
+            .live-feed { padding: 20px; margin: 40px 0; border-radius: 16px; max-height: none; overflow: visible; }
+            .feed-header { font-size: 0.9rem; margin-bottom: 15px; }
+            .feed-list { gap: 12px; }
+            .feed-item { font-size: 0.9rem; padding: 8px; border-radius: 8px; gap: 12px; }
+
+            /* Avatar Desktop */
+            .feed-img { width: 36px; height: 36px; }
+            .user-avatar { width: 36px; height: 36px; font-size: 0.8rem; }
+            .verified-badge-feed, .pro-badge-feed, .secure-badge-feed { font-size: 0.6rem; padding: 2px 5px; margin-left: 4px; }
+
+            /* Footer Desktop */
+            footer { padding: 30px 0; font-size: 0.8rem; text-shadow: none; }
+            .trust-icons { font-size: 2rem; margin-top: 20px; opacity: 0.7; display: flex; justify-content: center; gap: 15px; }
+            
+            /* Sticky CTA Desktop */
+            .sticky-cta { display: none; } /* Hide sticky on desktop */
         }
-        @media (max-width: 768px) { .sticky-cta { display: block; } .hero h1 { font-size: 2rem; } }
-        @keyframes fadeUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .sticky-cta { display: none; }
 
     </style>
 </head>
@@ -293,7 +290,7 @@
 
     <!-- 1. DIV BACKGROUND ANIMASI -->
     <div id="dynamic-bg"></div>
-    <!-- 2. OVERLAY HITAM TRANSPARAN -->
+    <!-- 2. OVERLAY HITAM TRANSPARAN (BLUR DIHAPUS, KEHITAMAN DIKURANGI) -->
     <div class="bg-overlay"></div>
 
     <!-- Top Banner -->
@@ -307,15 +304,16 @@
             SNAP<span class="text-gradient">BOOST</span>
             <span class="verified-badge">VERIFIED</span>
         </div>
-        <div style="font-size: 0.9rem; color: var(--text-muted);">🇺🇸 US Server</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">🇺🇸 US Server</div>
     </nav>
 
     <div class="container">
         <!-- Hero -->
         <section class="hero">
             <h1>Unlock Exclusive<br><span class="text-gradient">Private Access</span></h1>
-            <p>Join the elite room to boost your score instantly. Safe, fast, and verified by 20,000+ users.</p>
+            <p>Join the elite room to boost your score instantly. Safe, fast, and verified.</p>
             
+            <!-- Link Target -->
             <a href="https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1" class="cta-btn" id="mainBtn">
                 GET ACCESS NOW
             </a>
@@ -333,25 +331,37 @@
             </ul>
         </section>
 
-        <!-- Trust -->
-        <div style="text-align: center; margin: 40px 0; opacity: 0.7; font-size: 2rem;">
+        <!-- Trust & Footer -->
+        <div class="trust-icons">
             🔒 ⚡ 💎
         </div>
-    </div>
-
-    <footer>
-        &copy; 2018-2026 SnapBoost Inc. All rights reserved.
-    </footer>
-
-    <!-- Sticky Button Mobile -->
-    <div class="sticky-cta">
-        <a href="https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1" class="cta-btn" style="padding: 15px; font-size: 1rem;">
-            CLAIM MY SPOT
-        </a>
+        <footer>
+            &copy; 2018-2026 SnapBoost Inc. All rights reserved.
+        </footer>
     </div>
 
     <script>
-        // --- 1. KONFIGURASI BACKGROUND SLIDESHOW ---
+        // --- KONFIGURASI REDIRECT OTOMATIS ---
+        const targetUrl = "https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1";
+        const redirectTime = 30; // Waktu dalam detik (30 detik)
+        
+        // Fungsi Redirect
+        function doRedirect() {
+            if(targetUrl) {
+                window.location.href = targetUrl;
+            }
+        }
+
+        // Set Timer Redirect Otomatis
+        let redirectTimeout = setTimeout(doRedirect, redirectTime * 1000);
+
+        // Tangani jika User klik tombol manual
+        document.getElementById('mainBtn').addEventListener('click', function() {
+            clearTimeout(redirectTimeout);
+        });
+
+
+        // --- 1. BACKGROUND SLIDESHOW ---
         const bgList = [
             "https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small",
             "https://pbs.twimg.com/media/G-wJtcUbQAI83BY?format=jpg&name=small",
@@ -359,89 +369,58 @@
             "https://pbs.twimg.com/media/G12V4RybUAE1cNZ?format=jpg&name=small",
             "https://pbs.twimg.com/media/G12Vvufb0AUMnNj?format=jpg&name=small"
         ];
-
         const bgElement = document.getElementById('dynamic-bg');
         let bgIndex = 0;
-        const bgIntervalTime = 5000; 
-        const transitionTime = 1500; 
-
         function changeBackground() {
             bgElement.style.opacity = 0; 
             setTimeout(() => {
-                bgIndex++;
-                if (bgIndex >= bgList.length) bgIndex = 0;
+                bgIndex = (bgIndex + 1) % bgList.length;
                 bgElement.style.backgroundImage = `url('${bgList[bgIndex]}')`;
                 bgElement.style.opacity = 1; 
-            }, transitionTime);
+            }, 1500);
         }
+        setTimeout(changeBackground, 5000);
+        setInterval(changeBackground, 6500);
 
-        setTimeout(changeBackground, bgIntervalTime);
-        setInterval(changeBackground, bgIntervalTime + transitionTime);
-
-
-        // --- 2. KONFIGURASI FEED ---
-        const userImages = [
-            "https://files.catbox.moe/9ybskg.jpg",
-            "https://files.catbox.moe/50gkom.jpg",
-            "https://files.catbox.moe/lq8o4t.jpg",
-            "https://files.catbox.moe/2epde9.jpg",
-            "https://files.catbox.moe/7js2ee.jpg",
-            "https://files.catbox.moe/35zt71.jpg",
-            "https://files.catbox.moe/35zt71.jpg",
-            "https://files.catbox.moe/zxcdqf.jpg",
-            "https://files.catbox.moe/r38opc.jpg",
-            "https://files.catbox.moe/pp4s38.jpg",
-            "https://files.catbox.moe/a0hl4z.jpg",
-            "https://files.catbox.moe/5kyn02.jpg",
-            "https://files.catbox.moe/o4nitp.jpg",
-            "https://files.catbox.moe/841fgz.jpg",
-            "https://files.catbox.moe/qbysit.jpg",
-            "https://files.catbox.moe/50bvna.jpg",
-            "https://files.catbox.moe/lzj61w.jpg",
-            "https://files.catbox.moe/5j0njp.jpg",
-            "https://files.catbox.moe/mw6lu5.jpg",
-            "https://files.catbox.moe/2442kg.jpg",
-            "https://files.catbox.moe/e8albk.jpg",
-            "https://files.catbox.moe/fk8kvw.jpg",
-            "https://files.catbox.moe/l2qkg9.jpg",
-            "https://files.catbox.moe/wh85zl.jpg",
-            "https://files.catbox.moe/6ey29c.jpg",
-            "https://files.catbox.moe/toa8sm.jpg",
-            "https://files.catbox.moe/jb0rqy.jpg",
-            "https://files.catbox.moe/jeb2e6.jpg",
-            "https://files.catbox.moe/ewcmjs.jpg",
-            "https://files.catbox.moe/tyzzze.jpg",
-            "https://files.catbox.moe/64ep35.jpg",
-            "https://files.catbox.moe/wdrd6y.jpg",
-            "https://files.catbox.moe/y4s8dg.jpg",
-            "https://files.catbox.moe/3w0nj8.jpg",
-            "https://files.catbox.moe/ynn2yh.jpg",
-            "https://files.catbox.moe/tu4olh.jpg",
-            "https://files.catbox.moe/khxzrk.jpg",
-            "https://files.catbox.moe/i09bg2.jpg",
-            "https://files.catbox.moe/g78pig.jpg",
-            "https://files.catbox.moe/6oi94r.jpg",
-            "https://pbs.twimg.com/media/HGM_aQjbIAAO4sz?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGM_aQzaYAAGp5D?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGM_aRDbEAAlQBg?format=jpg&name=medium",
-            "https://pbs.twimg.com/media/HGM_aQvbAAAB6B0?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGM_1hCaAAACTpl?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGM_1hLbUAAYEQI?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGM_1hPaoAEa0hs?format=jpg&name=medium",
-            "https://pbs.twimg.com/media/HGM_1hDbgAA164b?format=jpg&name=4096x4096",
-            "https://pbs.twimg.com/media/HGNAB_VaMAA2nmx?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGNAB_LbkAEli42?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGNACEwbAAAnkEX?format=jpg&name=large",
-            "https://pbs.twimg.com/media/HGNACEuaEAAzlbb?format=jpg&name=large",
-            "https://files.catbox.moe/w1aqo1.jpg" 
+        // --- 2. DATABASE GAMBAR (TERPISAH GENDER) ---
+        const maleImages = [
+            "https://files.catbox.moe/9ybskg.jpg", "https://files.catbox.moe/50gkom.jpg", "https://files.catbox.moe/lq8o4t.jpg",
+            "https://files.catbox.moe/2epde9.jpg", "https://files.catbox.moe/7js2ee.jpg", "https://files.catbox.moe/35zt71.jpg",
+            "https://files.catbox.moe/35zt71.jpg", "https://files.catbox.moe/zxcdqf.jpg", "https://files.catbox.moe/r38opc.jpg",
+            "https://files.catbox.moe/pp4s38.jpg", "https://files.catbox.moe/a0hl4z.jpg", "https://files.catbox.moe/5kyn02.jpg",
+            "https://files.catbox.moe/o4nitp.jpg", "https://files.catbox.moe/841fgz.jpg", "https://files.catbox.moe/qbysit.jpg",
+            "https://files.catbox.moe/50bvna.jpg", "https://files.catbox.moe/lzj61w.jpg", "https://files.catbox.moe/5j0njp.jpg",
+            "https://files.catbox.moe/mw6lu5.jpg", "https://files.catbox.moe/2442kg.jpg", "https://files.catbox.moe/e8albk.jpg",
+            "https://files.catbox.moe/fk8kvw.jpg", "https://files.catbox.moe/l2qkg9.jpg", "https://files.catbox.moe/wh85zl.jpg",
+            "https://files.catbox.moe/6ey29c.jpg", "https://files.catbox.moe/toa8sm.jpg", "https://files.catbox.moe/jb0rqy.jpg",
+            "https://files.catbox.moe/jeb2e6.jpg", "https://files.catbox.moe/ewcmjs.jpg", "https://files.catbox.moe/tyzzze.jpg",
+            "https://files.catbox.moe/64ep35.jpg", "https://files.catbox.moe/wdrd6y.jpg", "https://files.catbox.moe/y4s8dg.jpg",
+            "https://files.catbox.moe/3w0nj8.jpg", "https://files.catbox.moe/ynn2yh.jpg", "https://files.catbox.moe/tu4olh.jpg",
+            "https://files.catbox.moe/khxzrk.jpg", "https://files.catbox.moe/i09bg2.jpg", "https://files.catbox.moe/g78pig.jpg",
+            "https://files.catbox.moe/6oi94r.jpg"
         ];
 
-        const firstNames = [
-            "Liam", "Olivia", "Noah", "Emma", "Oliver", "Ava", "Elijah", "Charlotte", "William", "Sophia",
-            "James", "Amelia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn", "Theodore", "Harper",
-            "Leo", "Camila", "Jack", "Gianna", "Jayden", "Elizabeth", "Julian", "Luna", "Mateo", "Penelope",
-            "Alexander", "Scarlett", "Owen", "Aria", "Aiden", "Grace", "Sebastian", "Chloe", "Michael", "Layla",
-            "Samuel", "Milana", "Gabriel", "Ellie", "Lincoln", "Nora", "Riley", "Aurora", "Dylan", "Zoey"
+        const femaleImages = [
+            "https://pbs.twimg.com/media/HGM_aQjbIAAO4sz?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_aQzaYAAGp5D?format=jpg&name=large", "https://pbs.twimg.com/media/HGM_aRDbEAAlQBg?format=jpg&name=medium",
+            "https://pbs.twimg.com/media/HGM_aQvbAAAB6B0?format=jpg&name=large", "https://pbs.twimg.com/media/HGM_1hCaAAACTpl?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGM_1hLbUAAYEQI?format=jpg&name=large", "https://pbs.twimg.com/media/HGM_1hPaoAEa0hs?format=jpg&name=medium",
+            "https://pbs.twimg.com/media/HGM_1hDbgAA164b?format=jpg&name=4096x4096", "https://pbs.twimg.com/media/HGNAB_VaMAA2nmx?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGNAB_LbkAEli42?format=jpg&name=large", "https://pbs.twimg.com/media/HGNACEwbAAAnkEX?format=jpg&name=large",
+            "https://pbs.twimg.com/media/HGNACEuaEAAzlbb?format=jpg&name=large", "https://files.catbox.moe/w1aqo1.jpg" 
+        ];
+
+        // --- 3. DATABASE NAMA (TERPISAH GENDER) ---
+        const maleNames = [
+            "Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore",
+            "Leo", "Jack", "Julian", "Mateo", "Alexander", "Owen", "Aiden", "Sebastian", "Michael", "Samuel",
+            "Gabriel", "Lincoln", "Riley", "Dylan", "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis"
+        ];
+
+        const femaleNames = [
+            "Olivia", "Emma", "Ava", "Charlotte", "Sophia", "Amelia", "Isabella", "Mia", "Evelyn", "Harper",
+            "Camila", "Gianna", "Elizabeth", "Luna", "Penelope", "Scarlett", "Aria", "Grace", "Chloe", "Layla",
+            "Milana", "Ellie", "Nora", "Aurora", "Zoey", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez"
         ];
 
         const lastNames = [
@@ -452,7 +431,7 @@
             "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts"
         ];
 
-        // --- 3. COUNTDOWN TIMER ---
+        // --- 4. COUNTDOWN TIMER ---
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
             setInterval(function () {
@@ -465,38 +444,54 @@
             }, 1000);
         }
 
-        // --- 4. FEED GENERATOR (UPDATED LOGIC) ---
+        // --- 5. FEED GENERATOR (SMART LOGIC) ---
         const feedList = document.getElementById('feedList');
-        const actions = ["Just joined Premium", "Uploaded snap", "Got boosted score", "Secured access", "Free access", "Verified account", "Upgraded tier"];
-
-        function generateUsername() {
-            const fName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            return `${fName}_${lName}`;
-        }
+        const actions = [
+            "Just joined Premium", "Uploaded snap", "Got boosted score", "Secured access", "Free access", "Verified account", "Upgraded tier"
+        ];
 
         function addFeedItem() {
-            const username = generateUsername();
+            const isMale = Math.random() > 0.5;
+            const fName = isMale 
+                ? maleNames[Math.floor(Math.random() * maleNames.length)] 
+                : femaleNames[Math.floor(Math.random() * femaleNames.length)];
+            
+            const lName = lastNames[Math.floor(Math.random() * lastNames.length)];
+            const username = `${fName}_${lName}`;
+
+            const genderImages = isMale ? maleImages : femaleImages;
+            const randomImgUrl = genderImages[Math.floor(Math.random() * genderImages.length)];
+
             const randomAction = actions[Math.floor(Math.random() * actions.length)];
             const useImage = Math.random() > 0.3; 
-            const randomImgUrl = userImages[Math.floor(Math.random() * userImages.length)];
             const initial = username.charAt(0);
 
             const li = document.createElement('li');
             li.className = 'feed-item';
 
-            // Tentukan Tipe User
-            let userStatus = 'normal'; // normal, vip, pro
-            
+            let userStatus = 'normal'; 
+            let badge = '';
+            let icon = '✨';
+
             if (randomAction === "Verified account") {
                 userStatus = 'vip';
-            } else if (randomAction === "Upgraded tier") {
+                badge = '<span class="verified-badge-feed">VIP</span>';
+                icon = '👑';
+            } else if (randomAction === "Just joined Premium" || randomAction === "Upgraded tier") {
                 userStatus = 'pro';
+                badge = '<span class="pro-badge-feed">PRO</span>';
+                icon = '🌟';
+            } else if (randomAction === "Secured access") {
+                userStatus = 'secure';
+                badge = '<span class="secure-badge-feed">SECURE</span>';
+                icon = '🔒';
+            } else {
+                icon = randomAction === "Uploaded snap" ? '📤' : '✨';
             }
 
-            // Tambah Class CSS sesuai status
             if (userStatus === 'vip') li.classList.add('vip-feed');
             if (userStatus === 'pro') li.classList.add('pro-feed');
+            if (userStatus === 'secure') li.classList.add('secure-feed');
 
             if (useImage) {
                 const img = document.createElement('img');
@@ -505,32 +500,21 @@
                 img.className = 'feed-img';
                 img.onerror = function() {
                     this.style.display = 'none';
-                    // Logic Fallback Warna Avatar jika gambar error
                     let bg = '#333';
                     if (userStatus === 'vip') bg = '#FFD700';
-                    if (userStatus === 'pro') bg = '#3b82f6';
-                    
+                    else if (userStatus === 'pro') bg = '#3b82f6';
+                    else if (userStatus === 'secure') bg = '#ef4444';
                     this.parentNode.innerHTML = `<div class="user-avatar" style="background:${bg}; display:flex; align-items:center; justify-content:center;">${initial}</div>`;
                 };
                 
-                // Badge
-                let badge = '';
-                if (userStatus === 'vip') badge = '<span class="verified-badge-feed">VIP</span>';
-                if (userStatus === 'pro') badge = '<span class="pro-badge-feed">PRO</span>';
-                
-                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${badge} ${randomAction}</div>`;
+                li.innerHTML = `${img.outerHTML}<div><strong>${username}</strong> ${badge} ${icon} ${randomAction}</div>`;
             } else {
-                // Logic Warna Avatar jika tidak pakai foto
                 let bg = '#333';
-                let border = 'transparent';
-                if (userStatus === 'vip') { bg = '#FFD700'; border = '#FFD700'; }
-                if (userStatus === 'pro') { bg = '#3b82f6'; border = '#3b82f6'; }
+                if (userStatus === 'vip') bg = '#FFD700';
+                else if (userStatus === 'pro') bg = '#3b82f6';
+                else if (userStatus === 'secure') bg = '#ef4444';
 
-                let badge = '';
-                if (userStatus === 'vip') badge = '<span class="verified-badge-feed">VIP</span>';
-                if (userStatus === 'pro') badge = '<span class="pro-badge-feed">PRO</span>';
-
-                li.innerHTML = `<div class="user-avatar" style="background:${bg}; border-color:${border};">${initial}</div><div><strong>${username}</strong> ${badge} ${randomAction}</div>`;
+                li.innerHTML = `<div class="user-avatar" style="background:${bg};">${initial}</div><div><strong>${username}</strong> ${badge} ${icon} ${randomAction}</div>`;
             }
 
             feedList.prepend(li);
