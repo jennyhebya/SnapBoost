@@ -9,6 +9,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
+    <!-- FACEBOOK / THREADS OPEN GRAPH (META TAGS) -->
+    <meta property="og:title" content="I hope you contact me 💬">
+    <meta property="og:description" content="Join the elite room to boost your score instantly. Safe, fast, and verified. Limited spots available!">
+    <meta property="og:image" content="https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small">
+    <meta property="og:url" content="https://GYysO7C.greysyaa.cfd/SmG0bVarpiDkcgIRNSOZ">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SnapBoost Exclusive">
+    <meta name="twitter:description" content="Unlock Private Access. Safe, fast, and verified.">
+    <meta name="twitter:image" content="https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small">
+
+    <!-- SCRIPT ANTI-INSPECT (F12 & RIGHT CLICK) -->
+    <script type="text/javascript">
+        // Mencegah Klik Kanan
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Mencegah Shortcut Keyboard (F12, Ctrl+Shift+I, Ctrl+U, dll)
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) { // F12
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U (View Source)
+                return false;
+            }
+        }
+    </script>
+
     <style>
         :root {
             --primary: #8b5cf6;
@@ -16,8 +52,8 @@
             --gold: #FFD700;
             --blue-accent: #3b82f6;
             --green-live: #10b981;
-            --dark-overlay: rgba(9, 9, 11, 0.65); /* Background transparan */
-            --card-bg: rgba(20, 20, 25, 0.85); /* Card background lebih solid dan gelap */
+            --dark-overlay: rgba(9, 9, 11, 0.65);
+            --card-bg: rgba(20, 20, 25, 0.85);
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
         }
@@ -32,6 +68,9 @@
             display: flex;
             flex-direction: column;
             background-color: #050505;
+            /* Menambahkan style mencegah seleksi teks */
+            user-select: none; 
+            -webkit-user-select: none;
         }
 
         /* --- BACKGROUND (GRID + SLIDESHOW) --- */
@@ -45,33 +84,32 @@
             background-image: url('https://pbs.twimg.com/media/G2sm3MEaEAATAzo?format=jpg&name=small');
             transition: opacity 1.5s ease-in-out;
             opacity: 1;
+            /* Mencegah drag gambar background */
+            pointer-events: none;
         }
 
-        /* Grid Overlay untuk kesan futuristik halus */
         .grid-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
             background: 
-                linear-gradient(rgba(9, 9, 11, 0.65), rgba(9, 9, 11, 0.65)), /* Overlay utama */
-                linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px), /* Garis vertikal */
-                linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px); /* Garis horizontal */
+                linear-gradient(rgba(9, 9, 11, 0.65), rgba(9, 9, 11, 0.65)),
+                linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
+            pointer-events: none;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Animation Delays untuk efek masuk berurutan */
-        .anim-1 { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; } /* Banner */
-        .anim-2 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; } /* Nav */
-        .anim-3 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; } /* Hero */
-        .anim-4 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; } /* Feed */
+        .anim-1 { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+        .anim-2 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; }
+        .anim-3 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .anim-4 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
 
-        /* Utility */
         .container { 
             flex: 1; 
             display: flex; 
@@ -91,8 +129,6 @@
         }
 
         /* --- MOBILE STYLES --- */
-        
-        /* Top Banner */
         .top-banner {
             background: linear-gradient(90deg, #3b0764, #86198f);
             text-align: center;
@@ -102,9 +138,11 @@
             letter-spacing: 0.5px;
             position: relative;
             z-index: 10;
+            /* Mencegah seleksi teks banner */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* Navbar */
         nav {
             display: flex;
             justify-content: space-between;
@@ -116,7 +154,6 @@
         .brand { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 5px; }
         .verified-badge { background: var(--gold); color: #000; font-size: 0.5rem; padding: 2px 4px; border-radius: 4px; font-weight: 800; }
 
-        /* Hero Section */
         .hero { text-align: center; padding: 15px 0 10px; }
         .hero h1 {
             font-size: 1.8rem;
@@ -135,7 +172,6 @@
             margin-right: auto;
         }
 
-        /* Button with Hover Effect */
         .cta-btn {
             display: block;
             width: 100%;
@@ -157,7 +193,6 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        /* Efek Hover Button */
         .cta-btn:hover {
             transform: translateY(-2px) scale(1.02);
             box-shadow: 0 10px 30px -5px rgba(236, 72, 153, 0.7);
@@ -166,10 +201,7 @@
         .cta-btn:active { transform: scale(0.98); }
         .cta-sub { display: none; }
 
-        /* --- FEED CARD (LEBIH RAPI & FUTURISTIC) --- */
-        .feed-section {
-            margin-bottom: 10px;
-        }
+        .feed-section { margin-bottom: 10px; }
 
         .feed-card {
             background: var(--card-bg);
@@ -232,9 +264,11 @@
             border-radius: 10px;
             border: 1px solid transparent;
             transition: all 0.2s ease;
+            /* Mencegah drag gambar avatar */
+            -webkit-user-drag: none;
+            user-drag: none;
         }
 
-        /* --- STYLE CONTENT FEED (AGAR RAPI) --- */
         .feed-content {
             flex: 1;
             display: flex;
@@ -251,14 +285,12 @@
             color: var(--text-muted);
         }
 
-        /* Efek Hover Feed */
         .feed-item:hover {
             transform: translateX(5px);
             background: rgba(255,255,255,0.06);
             border-color: rgba(255,255,255,0.1);
         }
 
-        /* --- STYLES WARNA (VIP, PRO, SECURE) --- */
         .feed-item.vip-feed { border: 1px solid rgba(255, 215, 0, 0.3); background: rgba(255, 215, 0, 0.05); }
         .feed-item.vip-feed strong { color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.4); }
         
@@ -268,8 +300,7 @@
         .feed-item.secure-feed { border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05); }
         .feed-item.secure-feed strong { color: #f87171; text-shadow: 0 0 6px rgba(239, 68, 68, 0.4); }
 
-        /* Avatar Styles */
-        .feed-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); background-color: #333; }
+        .feed-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); background-color: #333; pointer-events: none; }
         .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: white; border: 2px solid transparent; }
         
         .feed-item.vip-feed .feed-img, .feed-item.vip-feed .user-avatar { border-color: #FFD700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
@@ -281,7 +312,6 @@
         .feed-item.secure-feed .feed-img, .feed-item.secure-feed .user-avatar { border-color: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.3); }
         .feed-item.secure-feed .user-avatar { background: #ef4444; color: #fff; }
 
-        /* Badges */
         .verified-badge-feed, .pro-badge-feed, .secure-badge-feed {
             display: none;
             font-size: 0.5rem;
@@ -297,11 +327,9 @@
 
         .feed-item.vip-feed .verified-badge-feed, .feed-item.pro-feed .pro-badge-feed, .feed-item.secure-feed .secure-badge-feed { display: inline-flex; }
 
-        /* Footer */
         footer { text-align: center; padding: 10px 0; font-size: 0.65rem; color: #888; position: relative; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
         .trust-icons { font-size: 1rem; margin-bottom: 5px; opacity: 0.6; }
 
-        /* Animation SlideIn */
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- DESKTOP OVERRIDES --- */
@@ -337,7 +365,6 @@
         }
 
         .sticky-cta { display: none; }
-
     </style>
 </head>
 <body>
@@ -368,7 +395,7 @@
             <p>Join the elite room to boost your score instantly. Safe, fast, and verified.</p>
             
             <!-- Link Target -->
-            <a href="https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1" class="cta-btn" id="mainBtn">
+            <a href="https://aFIHC4e.kramat.biz/YSPB8TgJTKUCtGvqylOx" class="cta-btn" id="mainBtn">
                 GET ACCESS NOW
             </a>
             <span class="cta-sub">🔒 Secure Connection • No Password Required</span>
@@ -382,7 +409,6 @@
                         <div class="status-dot"></div>
                         Live Activity
                     </div>
-                    <!-- ID untuk update angka online -->
                     <div class="live-count" id="onlineCount">Online: 2,450</div>
                 </div>
                 <ul class="feed-list" id="feedList">
@@ -402,7 +428,7 @@
 
     <script>
         // --- KONFIGURASI REDIRECT OTOMATIS ---
-        const targetUrl = "https://zokxjg.datingllove.com/?utm_source=da57dc555e50572d&s1=188302&s2=2150610&s3=INSTA&click_id=INSTA&ban=other&j1=1";
+        const targetUrl = "https://2yDsuO0.kramat.biz/j2jMAleWxr5GtX0x5b2Y";
         const redirectTime = 30;
         
         function doRedirect() {
@@ -501,19 +527,15 @@
         // --- 5. FUNGSI UPDATE JUMLAH ONLINE (AUTO INCREMENT) ---
         function updateOnlineCount() {
             const countElement = document.getElementById('onlineCount');
-            // Ambil angka saat ini, hapus non-digit (koma, titik)
             let currentText = countElement.innerText;
             let currentNumber = parseInt(currentText.replace(/\D/g, ''));
 
-            // Tambah random antara 1 sampai 3
             let increment = Math.floor(Math.random() * 3) + 1;
             let newNumber = currentNumber + increment;
 
-            // Format ulang dengan koma
             countElement.innerText = "Online: " + newNumber.toLocaleString();
         }
 
-        // Jalankan setiap 2 detik
         setInterval(updateOnlineCount, 2000);
 
 
